@@ -2,16 +2,67 @@
 <div class="row mt-3">
     <h1 class="col-6 offset-3">Login</h1>
     <div class="col-6 offset-3">
-        <form action="/login" method="POST" class="needs-validation" novalidate>
+        <!-- Demo Credentials Section -->
+        <div class="alert alert-info mb-4">
+            <h5 class="alert-heading">🎯 Demo Credentials</h5>
+            <p class="mb-2">Try the platform with these demo accounts:</p>
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body p-2">
+                            <h6 class="card-title mb-1">👨‍💼 Admin</h6>
+                            <small class="d-block text-muted">Username: <strong>admin</strong></small>
+                            <small class="d-block text-muted">Password: <strong>admin123</strong></small>
+                            <button type="button" class="btn btn-sm btn-primary mt-2 w-100" onclick="fillCredentials('admin', 'admin123')">
+                                Use Admin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body p-2">
+                            <h6 class="card-title mb-1">🏠 Owner</h6>
+                            <small class="d-block text-muted">Username: <strong>owner</strong></small>
+                            <small class="d-block text-muted">Password: <strong>owner123</strong></small>
+                            <button type="button" class="btn btn-sm btn-warning mt-2 w-100" onclick="fillCredentials('owner', 'owner123')">
+                                Use Owner
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body p-2">
+                            <h6 class="card-title mb-1">👤 Customer</h6>
+                            <small class="d-block text-muted">Username: <strong>customer</strong></small>
+                            <small class="d-block text-muted">Password: <strong>customer123</strong></small>
+                            <button type="button" class="btn btn-sm btn-success mt-2 w-100" onclick="fillCredentials('customer', 'customer123')">
+                                Use Customer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="/login" method="POST" class="needs-validation" novalidate id="loginForm">
             <div class="mb-3">
-                <label for="username" id="username" class="form-label">Username</label>
-                <input name="username"type="text" class="form-control" required>
+                <label for="username" class="form-label">Username</label>
+                <input name="username" id="usernameInput" type="text" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="password" id="password" class="form-label">Password</label>
-                <input name="password"type="password" class="form-control" required>
+                <label for="password" class="form-label">Password</label>
+                <input name="password" id="passwordInput" type="password" class="form-control" required>
             </div>
-            <button class="btn btn-success">login</button>
+            <button class="btn btn-success">Login</button>
         </form>
     </div>
 </div>
+
+<script>
+    function fillCredentials(username, password) {
+        document.getElementById('usernameInput').value = username;
+        document.getElementById('passwordInput').value = password;
+    }
+</script>
