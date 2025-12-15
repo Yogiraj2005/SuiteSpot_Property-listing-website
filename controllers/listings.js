@@ -124,16 +124,16 @@ module.exports = {
             return res.redirect("/listings");
         }
 
-        // Fetch current booking for this listing (if any)
-        const currentBooking = await Booking.findOne({
+        // Fetch all confirmed bookings for this listing
+        const confirmedBookings = await Booking.find({
             listing: id,
-            status: 'confirmed',
+            status: { $in: ['confirmed', 'pending'] }, // Include pending and confirmed
             endDate: { $gte: new Date() } // Only consider bookings that haven't ended yet
         })
             .populate('guest')
-            .sort({ startDate: 1 }); // Get the earliest current booking
+            .sort({ startDate: 1 }); // Sort by start date
 
-        res.render("listings/show.ejs", { listing, currentBooking });
+        res.render("listings/show.ejs", { listing, confirmedBookings });
     },
 
     renderEditForm: async (req, res) => {

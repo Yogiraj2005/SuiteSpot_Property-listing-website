@@ -2,7 +2,7 @@
 
     <script>
         const mapToken = "<%= process.env.MAP_TOKEN %>";
-        const listing = <%- JSON.stringify(listing) %>;
+        const listing = <% - JSON.stringify(listing) %>;
     </script>
 
     <div class="row mt-3">
@@ -97,28 +97,39 @@
                 <!-- ================================================================= -->
                 <div class="col-6 offset-3 mb-3">
                     <hr>
-                    <% if (currentBooking) { %>
-                        <!-- If the listing IS booked, show a message -->
-                        <div class="alert alert-warning" role="alert">
-                            This property is currently booked from <b>
-                                <%= new Date(currentBooking.startDate).toLocaleDateString() %>
-                            </b> to <b>
-                                <%= new Date(currentBooking.endDate).toLocaleDateString() %>.
-                            </b>
 
-                            <!-- THIS IS THE NEW PART: Show guest info only to the owner -->
-                            <% if (currUser && listing.owner && currUser.id===listing.owner.id) { %>
-                                <br>Booked by: <b>
-                                    <%= currentBooking.guest.username %>
-                                </b>
-                                <% } %>
+                    <!-- Show all confirmed/pending bookings if any exist -->
+                    <% if (confirmedBookings && confirmedBookings.length> 0) { %>
+                        <h5>Currently Booked Dates:</h5>
+                        <div class="alert alert-info" role="alert">
+                            <ul class="mb-0">
+                                <% for(let booking of confirmedBookings) { %>
+                                    <li>
+                                        <b>
+                                            <%= new Date(booking.startDate).toLocaleDateString() %>
+                                        </b> to
+                                        <b>
+                                            <%= new Date(booking.endDate).toLocaleDateString() %>
+                                        </b>
+                                        (<%= booking.status %>)
+
+                                            <!-- Show guest info only to the owner -->
+                                            <% if (currUser && listing.owner && currUser.id===listing.owner.id) { %>
+                                                - Booked by: <b>
+                                                    <%= booking.guest.username %>
+                                                </b>
+                                                <% } %>
+                                    </li>
+                                    <% } %>
+                            </ul>
                         </div>
-                        <% } else { %>
-                            <!-- If the listing IS NOT booked... -->
+                        <% } %>
+
+                            <!-- Always show booking form for non-owners (unless admin) -->
                             <% if (currUser && listing.owner && currUser.id !==listing.owner.id && currUser.role
                                 !=='admin' ) { %>
-                                <!-- ...and the current user is not the owner, show the booking form -->
                                 <h4>Book this Property</h4>
+                                <p class="text-muted">Select dates that don't overlap with the booked dates above.</p>
                                 <form method="POST" action="/listings/<%= listing.id %>/book" class="needs-validation"
                                     novalidate>
                                     <div class="mb-3">
@@ -134,7 +145,6 @@
                                     <button class="btn btn-success">Book Now</button>
                                 </form>
                                 <% } %>
-                                    <% } %>
                 </div>
                 <!-- ================================================================= -->
 

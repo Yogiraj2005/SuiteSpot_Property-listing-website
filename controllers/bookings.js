@@ -38,36 +38,19 @@ module.exports = {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         const totalPrice = diffDays * listing.price;
 
-        // Check if user already has a booking that overlaps with the new booking dates
-        // Mongoose query for overlapping dates
-        const existingUserBooking = await Booking.findOne({
-            guest: guestId,
-            $or: [
-                { startDate: { $gte: start, $lte: end } },
-                { endDate: { $gte: start, $lte: end } },
-                { $and: [
-                    { startDate: { $lte: start } },
-                    { endDate: { $gte: end } }
-                ]}
-            ]
-        });
-
-        if (existingUserBooking) {
-            req.flash("error", "You already have a booking during these dates.");
-            return res.redirect(`/listings/${listingId}`);
-        }
-
-        // Advanced Validation: Check for overlapping bookings
+        // Check for overlapping bookings on THIS specific listing
         const overlappingBooking = await Booking.findOne({
             listing: listingId,
             status: { $ne: 'cancelled' }, // Ignore cancelled bookings
             $or: [
                 { startDate: { $gte: start, $lte: end } },
                 { endDate: { $gte: start, $lte: end } },
-                { $and: [
-                    { startDate: { $lte: start } },
-                    { endDate: { $gte: end } }
-                ]}
+                {
+                    $and: [
+                        { startDate: { $lte: start } },
+                        { endDate: { $gte: end } }
+                    ]
+                }
             ]
         });
 
@@ -114,12 +97,12 @@ module.exports = {
         // Find all listings owned by the current user
         const ownerListings = await Listing.find({ owner: ownerId }, '_id');
         const listingIds = ownerListings.map(listing => listing._id);
-        
+
         const allBookings = await Booking.find({
             listing: { $in: listingIds }
         })
-        .populate('listing')
-        .populate('guest');
+            .populate('listing')
+            .populate('guest');
 
         // Manually attach bills
         for (let booking of allBookings) {
