@@ -232,3 +232,118 @@ img {
     background-color: #28a745;
     border-color: #28a745;
 }
+
+/* ========================================= */
+/* BOOKING CALENDAR STYLES */
+/* ========================================= */
+
+/* Calendar container */
+.flatpickr-calendar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    border: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* Calendar header */
+.flatpickr-months {
+    background-color: #fe424d !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.flatpickr-month {
+    color: white !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    background-color: #fe424d !important;
+    color: white !important;
+}
+
+.flatpickr-prev-month svg,
+.flatpickr-next-month svg {
+    fill: white !important;
+}
+
+/* Weekday labels */
+.flatpickr-weekdays {
+    background-color: #f8f9fa !important;
+}
+
+.flatpickr-weekday {
+    color: #666 !important;
+    font-weight: 600 !important;
+}
+
+/* Individual dates */
+.flatpickr-day {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Available dates hover */
+.flatpickr-day:hover:not(.flatpickr-disabled):not(.booked-date) {
+    background-color: #ffe5e7 !important;
+    border-color: #fe424d !important;
+    color: #fe424d !important;
+}
+
+/* Selected dates */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: #fe424d !important;
+    border-color: #fe424d !important;
+    color: white !important;
+}
+
+/* Dates in selected range */
+.flatpickr-day.inRange {
+    background-color: #ffe5e7 !important;
+    border-color: #ffe5e7 !important;
+    color: #fe424d !important;
+    box-shadow: none !important;
+}
+
+/* Booked dates (disabled) */
+.flatpickr-day.booked-date,
+.flatpickr-day.flatpickr-disabled.booked-date {
+    background-color: #ffebee !important;
+    color: #d32f2f !important;
+    cursor: not-allowed !important;
+    text-decoration: line-through !important;
+    opacity: 0.6 !important;
+}
+
+/* Today */
+.flatpickr-day.today {
+    border-color: #fe424d !important;
+    font-weight: 700 !important;
+}
+
+.flatpickr-day.today:not(.selected) {
+    color: #fe424d !important;
+}
+
+/* Selected dates display */
+#selectedDatesDisplay {
+    display: block !important;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+    border-radius: 8px;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .flatpickr-calendar {
+        width: 100% !important;
+    }
+    
+    .flatpickr-calendar.showTimeInput.hasTime .flatpickr-time {
+        height: auto !important;
+    }
+}
