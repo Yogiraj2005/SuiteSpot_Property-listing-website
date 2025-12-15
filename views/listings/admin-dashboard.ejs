@@ -1,0 +1,419 @@
+<% layout("/layouts/boilerplate") %>
+    <div class="row mt-3">
+        <div class="col-10 offset-1">
+            <h3>Admin Dashboard</h3>
+
+            <div class="mb-3">
+                <a href="/listings/admin/export/listings" class="btn btn-success me-2">Export Listings (CSV)</a>
+                <a href="/listings/admin/export/bookings" class="btn btn-success me-2">Export Bookings (CSV)</a>
+                <a href="/listings/admin/export/users" class="btn btn-success">Export Users (CSV)</a>
+            </div>
+
+            <ul class="nav nav-tabs mb-3" id="adminTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending"
+                        type="button" role="tab" aria-controls="pending" aria-selected="true">Pending (<%=
+                            pendingListings.length %>)</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved"
+                        type="button" role="tab" aria-controls="approved" aria-selected="false">Approved (<%=
+                            approvedListings.length %>)</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected"
+                        type="button" role="tab" aria-controls="rejected" aria-selected="false">Rejected (<%=
+                            rejectedListings.length %>)</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="owners-tab" data-bs-toggle="tab" data-bs-target="#owners" type="button"
+                        role="tab" aria-controls="owners" aria-selected="false">Owners</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers"
+                        type="button" role="tab" aria-controls="customers" aria-selected="false">Customers</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings"
+                        type="button" role="tab" aria-controls="bookings" aria-selected="false">Bookings</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="adminTabsContent">
+                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                    <h4>Pending Listings</h4>
+                    <% if (pendingListings.length> 0) { %>
+                        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+                            <% for(let listing of pendingListings) { %>
+                                <div class="card col listing-card">
+                                    <img src="<%= listing.image %>" class="card-img-top" alt="listing_image"
+                                        style="height: 20rem;">
+                                    <div class="card-img-overlay"></div>
+                                    <div class="card-body">
+                                        <p class="card-text"><b>
+                                                <%= listing.title %>
+                                            </b> <br>
+                                            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                                        </p>
+                                        <a href="/listings/<%= listing.id %>" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } else { %>
+                            <p>No pending listings.</p>
+                            <% } %>
+                </div>
+                <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="approved-tab">
+                    <h4>Approved Listings</h4>
+                    <% if (approvedListings.length> 0) { %>
+                        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+                            <% for(let listing of approvedListings) { %>
+                                <div class="card col listing-card">
+                                    <img src="<%= listing.image %>" class="card-img-top" alt="listing_image"
+                                        style="height: 20rem;">
+                                    <div class="card-img-overlay"></div>
+                                    <div class="card-body">
+                                        <p class="card-text"><b>
+                                                <%= listing.title %>
+                                            </b> <br>
+                                            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                                        </p>
+                                        <a href="/listings/<%= listing.id %>" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } else { %>
+                            <p>No approved listings.</p>
+                            <% } %>
+                </div>
+                <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
+                    <h4>Rejected Listings</h4>
+                    <% if (rejectedListings.length> 0) { %>
+                        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+                            <% for(let listing of rejectedListings) { %>
+                                <div class="card col listing-card">
+                                    <img src="<%= listing.image %>" class="card-img-top" alt="listing_image"
+                                        style="height: 20rem;">
+                                    <div class="card-img-overlay"></div>
+                                    <div class="card-body">
+                                        <p class="card-text"><b>
+                                                <%= listing.title %>
+                                            </b> <br>
+                                            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                                        </p>
+                                        <a href="/listings/<%= listing.id %>" class="stretched-link"></a>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } else { %>
+                            <p>No rejected listings.</p>
+                            <% } %>
+                </div>
+                <div class="tab-pane fade" id="owners" role="tabpanel" aria-labelledby="owners-tab">
+                    <h4>Owners</h4>
+                    <form class="d-flex mb-3 owner-search-form" role="search" action="/listings/admin/dashboard"
+                        method="GET">
+                        <input type="hidden" name="tab" value="owners">
+                        <input class="form-control me-2" type="search" placeholder="Search Owners by Username or Email"
+                            aria-label="Search" name="searchOwner" value="<%= query.searchOwner || '' %>">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <div id="owners-table-container">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let user of filteredOwners) { %>
+                                    <% if (user.role==='owner' ) { %>
+                                        <tr>
+                                            <td>
+                                                <%= user.username %>
+                                            </td>
+                                            <td>
+                                                <%= user.email %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
+                    <h4>Customers</h4>
+                    <form class="d-flex mb-3 customer-search-form" role="search" action="/listings/admin/dashboard"
+                        method="GET">
+                        <input type="hidden" name="tab" value="customers">
+                        <input class="form-control me-2" type="search"
+                            placeholder="Search Customers by Username or Email" aria-label="Search"
+                            name="searchCustomer" value="<%= query.searchCustomer || '' %>">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <div id="customers-table-container">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let user of filteredCustomers) { %>
+                                    <% if (user.role==='customer' ) { %>
+                                        <tr>
+                                            <td>
+                                                <%= user.username %>
+                                            </td>
+                                            <td>
+                                                <%= user.email %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="bookings" role="tabpanel" aria-labelledby="bookings-tab">
+                    <h4>All Bookings</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Listing Title</th>
+                                <th>Guest Username</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(let booking of allBookings) { %>
+                                <tr>
+                                    <td>
+                                        <%= booking.listing.title %>
+                                    </td>
+                                    <td>
+                                        <%= booking.guest.username %>
+                                    </td>
+                                    <td>
+                                        <%= booking.startDate.toLocaleDateString() %>
+                                    </td>
+                                    <td>
+                                        <%= booking.endDate.toLocaleDateString() %>
+                                    </td>
+                                    <td>&#8377; <%= booking.totalPrice.toLocaleString("en-IN") %>
+                                    </td>
+                                    <td>
+                                        <%= booking.status %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ownerSearchForm = document.querySelector('.owner-search-form');
+            const customerSearchForm = document.querySelector('.customer-search-form');
+            const ownersTableContainer = document.getElementById('owners-table-container');
+            const customersTableContainer = document.getElementById('customers-table-container');
+
+            if (ownerSearchForm) {
+                const ownerSearchInput = ownerSearchForm.querySelector('input[name="searchOwner"]');
+                ownerSearchForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(ownerSearchForm);
+                    const searchOwner = formData.get('searchOwner');
+                    const tab = formData.get('tab');
+
+                    const url = `/listings/admin/dashboard?tab=${tab}&searchOwner=${searchOwner}`;
+
+                    try {
+                        const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                        const data = await response.json();
+                        updateOwnersTable(data.filteredOwners);
+                    } catch (error) {
+                        console.error('Error fetching owners:', error);
+                    }
+                });
+
+                if (ownerSearchInput) {
+                    ownerSearchInput.addEventListener('input', () => {
+                        if (ownerSearchInput.value.trim() === '') {
+                            ownerSearchForm.dispatchEvent(new Event('submit'));
+                        }
+                    });
+                }
+            }
+
+            if (customerSearchForm) {
+                const customerSearchInput = customerSearchForm.querySelector('input[name="searchCustomer"]');
+                customerSearchForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(customerSearchForm);
+                    const searchCustomer = formData.get('searchCustomer');
+                    const tab = formData.get('tab');
+
+                    const url = `/listings/admin/dashboard?tab=${tab}&searchCustomer=${searchCustomer}`;
+
+                    try {
+                        const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                        const data = await response.json();
+                        updateCustomersTable(data.filteredCustomers);
+                    } catch (error) {
+                        console.error('Error fetching customers:', error);
+                    }
+                });
+
+                if (customerSearchInput) {
+                    customerSearchInput.addEventListener('input', () => {
+                        if (customerSearchInput.value.trim() === '') {
+                            customerSearchForm.dispatchEvent(new Event('submit'));
+                        }
+                    });
+                }
+            }
+
+            function updateOwnersTable(owners) {
+                let tableHtml = `<table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Listings</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                // below username, email, listings, 
+                // <th>Bookings</th>
+                //     <th>Bills</th>
+                //     <th>Reviews</th>
+                if (owners.length > 0) {
+                    owners.forEach(owner => {
+                        tableHtml += `<tr>
+                                    <td>${owner.username}</td>
+                                    <td>${owner.email}</td>
+                                    <td>`;
+                        if (owner.Listings && owner.Listings.length > 0) {
+                            owner.Listings.forEach(listing => {
+                                const createdDate = new Date(listing.createdAt).toLocaleDateString();
+                                const createdTime = new Date(listing.createdAt).toLocaleTimeString();
+                                tableHtml += `<div class="card mb-2"><img src="${listing.image}" class="card-img-top" alt="Listing Image" style="height: 100px; object-fit: cover;"><div class="card-body"><h6 class="card-title">${listing.title}</h6><p class="card-text">Price: ${listing.price}, Location: ${listing.location}, Country: ${listing.country}, Status: ${listing.status}<br><small class="text-muted">Created on: ${createdDate} at ${createdTime}</small></p></div></div>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No listings</p>`;
+                        }
+                        tableHtml += `</td><td>`;
+                        /*
+                        if (owner.Bookings && owner.Bookings.length > 0) {
+                            owner.Bookings.forEach(booking => {
+                                tableHtml += `<p>Listing: ${booking.listing.title}, Start: ${new Date(booking.startDate).toLocaleDateString()}, End: ${new Date(booking.endDate).toLocaleDateString()}</p>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No bookings</p>`;
+                        }
+                        tableHtml += `</td><td>`;
+                        if (owner.Bills && owner.Bills.length > 0) {
+                            owner.Bills.forEach(bill => {
+                                tableHtml += `<p>Amount: ${bill.amount}, Due Date: ${new Date(bill.dueDate).toLocaleDateString()}</p>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No bills</p>`;
+                        }
+                        tableHtml += `</td><td>`;
+                        if (owner.Reviews && owner.Reviews.length > 0) {
+                            owner.Reviews.forEach(review => {
+                                tableHtml += `<p>Rating: ${review.rating}, Comment: ${review.comment}</p>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No reviews</p>`;
+                        }
+                        tableHtml += `</td></tr>`;
+                        */
+                    });
+
+                } else {
+                    tableHtml += `<tr><td colspan="6">No owners found.</td></tr>`;
+                }
+                tableHtml += `</tbody></table>`;
+                ownersTableContainer.innerHTML = tableHtml;
+            }
+
+            function updateCustomersTable(customers) {
+                let tableHtml = `<table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Bookings</th>
+                                        <th>Bills</th>
+                                        <th>Reviews</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                if (customers.length > 0) {
+                    customers.forEach(customer => {
+                        tableHtml += `<tr>
+                                    <td>${customer.username}</td>
+                                    <td>${customer.email}</td>
+                                    <td>`;
+                        if (customer.Bookings && customer.Bookings.length > 0) {
+                            customer.Bookings.forEach(booking => {
+                                tableHtml += `<p>Listing: ${booking.listing.title}, Start: ${new Date(booking.startDate).toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                })}, End: ${new Date(booking.endDate).toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                })}</p>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No bookings</p>`;
+                        }
+                        tableHtml += `</td><td>`;
+                        if (customer.Bills && customer.Bills.length > 0) {
+                            customer.Bills.forEach(bill => {
+                                tableHtml += `<p>Amount: ${bill.amount}, Due Date: ${new Date(bill.dueDate).toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                })}</p>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No bills</p>`;
+                        }
+                        tableHtml += `</td><td>`;
+                        if (customer.Reviews && customer.Reviews.length > 0) {
+                            customer.Reviews.forEach(review => {
+                                tableHtml += `<p>Rating: ${review.rating}, Comment: ${review.comment} <br> <hr> Listing: ${review.listing ? review.listing.title : 'N/A'}</p>`;
+                            });
+                        } else {
+                            tableHtml += `<p>No reviews</p>`;
+                        }
+                        tableHtml += `</td></tr>`;
+                    });
+                } else {
+                    tableHtml += `<tr><td colspan="5">No customers found.</td></tr>`;
+                }
+                tableHtml += `</tbody></table>`;
+                customersTableContainer.innerHTML = tableHtml;
+            }
+        });
+    </script>
+    </body>
+
+    </html>
