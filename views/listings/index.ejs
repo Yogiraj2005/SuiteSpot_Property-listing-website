@@ -178,19 +178,19 @@
                                         <%= listing.title %>
                                     </b> <br>
                                 </p>
-                                <p class="card-text"></p>&#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-                                    <i class="tax-info"> &nbsp; &nbsp;+18% GST</i>
-                                    </p>
+                                <p class="card-text listing-price">
+                                    <i class="fas fa-rupee-sign"></i> <%= listing.price.toLocaleString("en-IN") %>
+                                    <span class="price-period">/ night</span>
+                                    <br>
+                                    <i class="tax-info">+18% GST</i>
+                                </p>
                                     <!-- <p class="card-text"><%= listing.description %></p> -->
                                     <p class="card-text">
-                                        <%= listing.location %>
-                                    </p>
+                                    <i class="fas fa-map-marker-alt text-danger"></i> <%= listing.location %>, <%= listing.country %>
+                                </p>
                                     <p class="card-text">
-                                        <%= listing.country %>
-                                    </p>
-                                    <p class="card-text"><b>Capacity:</b>
-                                        <%= listing.capacity %>
-                                    </p>
+                                    <i class="fas fa-users text-primary"></i> <b>Capacity:</b> <%= listing.capacity %> guests
+                                </p>
                             </div>
                             <div>
                                 <% if (listing.festivalName) { %>
