@@ -212,27 +212,25 @@ module.exports = {
 
         let allBookings = await Booking.find({}).populate('listing').populate('guest');
 
-        let filteredOwners = allUsers.filter(user => user.role === 'owner');
-        let filteredCustomers = allUsers.filter(user => user.role === 'customer');
+        let filteredOwners = [];
+        let filteredCustomers = [];
 
         if (searchOwner && searchOwner.trim() !== '') {
             const searchTerm = searchOwner.toLowerCase();
-            filteredOwners = filteredOwners.filter(owner =>
-                owner.username.toLowerCase().includes(searchTerm) ||
-                owner.email.toLowerCase().includes(searchTerm)
+            filteredOwners = allUsers.filter(user =>
+                user.role === 'owner' &&
+                (user.username.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm))
             );
-        } else if (searchOwner === '') {
-            filteredOwners = [];
         }
 
         if (searchCustomer && searchCustomer.trim() !== '') {
             const searchTerm = searchCustomer.toLowerCase();
-            filteredCustomers = filteredCustomers.filter(customer =>
-                customer.username.toLowerCase().includes(searchTerm) ||
-                customer.email.toLowerCase().includes(searchTerm)
+            filteredCustomers = allUsers.filter(user =>
+                user.role === 'customer' &&
+                (user.username.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm))
             );
-        } else if (searchCustomer === '') {
-            filteredCustomers = [];
         }
 
         const pendingListings = await Listing.find({ status: 'pending' });
