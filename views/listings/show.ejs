@@ -3,14 +3,7 @@
     <script>
         const mapToken = "<%= process.env.MAP_TOKEN %>";
         const listing = <%  - JSON.stringify(listing) %>;
-    </script>
-
-    <!-- Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-
-
-    <div class="row mt-3">
+    </script><div class="row mt-3">
         <div class="col-8 offset-3">
             <h3>
                 <%= listing.title %>
@@ -134,26 +127,17 @@
                             <% if (currUser && listing.owner && currUser.id !==listing.owner.id && currUser.role
                                 !=='admin' ) { %>
                                 <h4>Book this Property</h4>
-                                <p class="text-muted">Select your check-in and check-out dates on the calendar below.
-                                    Booked dates are disabled.</p>
-
-                                <!-- Calendar Widget -->
-                                <div class="mb-3">
-                                    <input type="text" id="bookingCalendar"
-                                        data-booked-dates='<%- JSON.stringify(confirmedBookings.map(b => ({ start: b.startDate, end: b.endDate }))) %>'>
-                                </div>
-
-                                <!-- Selected Dates Display -->
-                                <div id="selectedDatesDisplay" class="alert alert-success mb-3" style="display: none;">
-                                </div>
-
-                                <form method="POST" action="/listings/<%= listing.id %>/book" class="needs-validation"
-                                    novalidate>
-                                    <!-- Hidden fields for form submission -->
-                                    <input type="hidden" id="startDate" name="booking[startDate]" required>
-                                    <input type="hidden" id="endDate" name="booking[endDate]" required>
-
-                                    <button class="btn btn-success" type="submit">Book Now</button>
+                                <p class="text-muted">Select dates that don't overlap with the booked dates above.</p>
+                                <form method="POST" action="/listings/<%= listing.id %>/book" class="needs-validation" novalidate>
+                                    <div class="mb-3">
+                                        <label for="startDate" class="form-label">Start Date</label>
+                                        <input type="date" id="startDate" name="booking[startDate]" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="endDate" class="form-label">End Date</label>
+                                        <input type="date" id="endDate" name="booking[endDate]" class="form-control" required>
+                                    </div>
+                                    <button class="btn btn-success">Book Now</button>
                                 </form>
                                 <% } %>
                 </div>
@@ -229,6 +213,3 @@
     </div>
 
     <script src="/js/map.js"></script>
-    <!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="/js/booking-calendar.js"></script>
