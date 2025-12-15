@@ -239,11 +239,37 @@ module.exports = {
 
         if (req.xhr || req.headers.accept.indexOf('json') > -1) {
             if (tab === 'owners') {
-                return res.json({ filteredOwners });
+                // Convert to plain objects to ensure associated data is included
+                const ownersData = filteredOwners.map(owner => ({
+                    _id: owner._id,
+                    username: owner.username,
+                    email: owner.email,
+                    role: owner.role,
+                    Listings: owner.Listings,
+                    Bookings: owner.Bookings,
+                    Bills: owner.Bills,
+                    Reviews: owner.Reviews
+                }));
+                return res.json({ filteredOwners: ownersData });
             } else if (tab === 'customers') {
-                return res.json({ filteredCustomers });
+                // Convert to plain objects to ensure associated data is included
+                const customersData = filteredCustomers.map(customer => ({
+                    _id: customer._id,
+                    username: customer.username,
+                    email: customer.email,
+                    role: customer.role,
+                    Listings: customer.Listings,
+                    Bookings: customer.Bookings,
+                    Bills: customer.Bills,
+                    Reviews: customer.Reviews
+                }));
+                return res.json({ filteredCustomers: customersData });
             }
         }
+
+        // Calculate total counts for tab labels
+        const totalOwners = allUsers.filter(user => user.role === 'owner').length;
+        const totalCustomers = allUsers.filter(user => user.role === 'customer').length;
 
         res.render("listings/admin-dashboard.ejs", {
             pendingListings,
@@ -252,6 +278,8 @@ module.exports = {
             filteredOwners,
             filteredCustomers,
             allBookings,
+            totalOwners,
+            totalCustomers,
             query: req.query
         });
     },
