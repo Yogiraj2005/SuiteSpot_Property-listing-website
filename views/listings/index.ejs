@@ -119,37 +119,19 @@
         </div> -->
             <div class="col-md-2">
                 <label for="city" class="form-label">City</label>
-                <select class="form-select" id="city" name="city">
-                    <option value="">All</option>
-                    <option value="Nashik" <%=(typeof query !=='undefined' && query.city==='Nashik' ) ? 'selected' : ''
-                        %>>Nashik</option>
-                    <option value="Prayagraj" <%=(typeof query !=='undefined' && query.city==='Prayagraj' ) ? 'selected'
-                        : '' %>>Prayagraj</option>
-                </select>
+                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city name" value="<%= typeof query !== 'undefined' ? (query.city || '') : '' %>" />
             </div>
             <div class="col-md-3">
                 <label for="festivalName" class="form-label">Festival</label>
-                <select class="form-select" id="festivalName" name="festivalName">
-                    <option value="">All</option>
-                    <% festivals.forEach(festival=> { %>
-                        <option value="<%= festival %>" <%=(typeof query !=='undefined' &&
-                            query.festivalName===festival) ? 'selected' : '' %>><%= festival %>
-                        </option>
-                        <% }); %>
-                </select>
+                <input type="text" class="form-control" id="festivalName" name="festivalName" 
+                       placeholder="Enter festival name" 
+                       value="<%= typeof query !== 'undefined' ? (query.festivalName || '') : '' %>">
             </div>
             <div class="col-md-2">
                 <label for="nearestLocation" class="form-label">Nearest Location</label>
-                <select class="form-select" id="nearestLocation" name="nearestLocation">
-                    <option value="">All</option>
-                    <% if (typeof nearestLocations !=='undefined' ) { %>
-                        <% nearestLocations.forEach(location=> { %>
-                            <option value="<%= location %>" <%=(typeof query !=='undefined' &&
-                                query.nearestLocation===location) ? 'selected' : '' %>><%= location %>
-                            </option>
-                            <% }); %>
-                                <% } %>
-                </select>
+                <input type="text" class="form-control" id="nearestLocation" name="nearestLocation" 
+                       placeholder="Enter location" 
+                       value="<%= typeof query !== 'undefined' ? (query.nearestLocation || '') : '' %>">
             </div>
             <div class="col-md-2">
                 <label for="minPrice" class="form-label">Min Price</label>
