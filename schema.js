@@ -14,10 +14,10 @@ module.exports.listingSchema = Joi.object({
         nearestLocation2: Joi.string().required(),
         distance2: Joi.number().required().min(0),
         nearestLocation3: Joi.string().allow('', null),
-        distance3: Joi.number().allow(null).min(0),
+        distance3: Joi.number().allow('', null).min(0),
         nearestLocation4: Joi.string().allow('', null),
-        distance4: Joi.number().allow(null).min(0),
-        image : Joi.string().allow("", null)
+        distance4: Joi.number().allow('', null).min(0),
+        image: Joi.string().allow("", null)
     }).required(),
 });
 
