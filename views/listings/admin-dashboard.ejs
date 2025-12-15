@@ -27,11 +27,11 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="owners-tab" data-bs-toggle="tab" data-bs-target="#owners" type="button"
-                        role="tab" aria-controls="owners" aria-selected="false">Owners</button>
+                        role="tab" aria-controls="owners" aria-selected="false">Owners (<%= totalOwners %>)</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers"
-                        type="button" role="tab" aria-controls="customers" aria-selected="false">Customers</button>
+                        type="button" role="tab" aria-controls="customers" aria-selected="false">Customers (<%= totalCustomers %>)</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings"
@@ -136,35 +136,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (filteredOwners.length === 0 && (!query.searchOwner || query.searchOwner.trim() === '')) { %>
+                                <% if (filteredOwners.length===0 && (!query.searchOwner || query.searchOwner.trim()===''
+                                    )) { %>
                                     <tr>
                                         <td colspan="3" class="text-center py-5">
                                             <i class="fas fa-search fa-3x text-muted mb-3"></i>
                                             <h5 class="text-muted">Search for Owners</h5>
-                                            <p class="text-muted">Use the search box above to find owners by username or email</p>
+                                            <p class="text-muted">Use the search box above to find owners by username or
+                                                email</p>
                                         </td>
                                     </tr>
-                                <% } else if (filteredOwners.length === 0) { %>
-                                    <tr>
-                                        <td colspan="3" class="text-center py-4">
-                                            <i class="fas fa-user-slash fa-2x text-muted mb-2"></i>
-                                            <p class="text-muted">No owners found matching your search</p>
-                                        </td>
-                                    </tr>
-                                <% } else { %>
-                                <% for(let user of filteredOwners) { %>
-                                    <% if (user.role==='owner' ) { %>
+                                    <% } else if (filteredOwners.length===0) { %>
                                         <tr>
-                                            <td>
-                                                <%= user.username %>
-                                            </td>
-                                            <td>
-                                                <%= user.email %>
+                                            <td colspan="3" class="text-center py-4">
+                                                <i class="fas fa-user-slash fa-2x text-muted mb-2"></i>
+                                                <p class="text-muted">No owners found matching your search</p>
                                             </td>
                                         </tr>
-                                        <% } %>
-                                            <% } %>
-                                <% } %>
+                                        <% } else { %>
+                                            <% for(let user of filteredOwners) { %>
+                                                <% if (user.role==='owner' ) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= user.username %>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.email %>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% } %>
                             </tbody>
                         </table>
                     </div>
@@ -194,35 +196,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (filteredCustomers.length === 0 && (!query.searchCustomer || query.searchCustomer.trim() === '')) { %>
+                                <% if (filteredCustomers.length===0 && (!query.searchCustomer ||
+                                    query.searchCustomer.trim()==='' )) { %>
                                     <tr>
                                         <td colspan="5" class="text-center py-5">
                                             <i class="fas fa-search fa-3x text-muted mb-3"></i>
                                             <h5 class="text-muted">Search for Customers</h5>
-                                            <p class="text-muted">Use the search box above to find customers by username or email</p>
+                                            <p class="text-muted">Use the search box above to find customers by username
+                                                or email</p>
                                         </td>
                                     </tr>
-                                <% } else if (filteredCustomers.length === 0) { %>
-                                    <tr>
-                                        <td colspan="5" class="text-center py-4">
-                                            <i class="fas fa-user-slash fa-2x text-muted mb-2"></i>
-                                            <p class="text-muted">No customers found matching your search</p>
-                                        </td>
-                                    </tr>
-                                <% } else { %>
-                                <% for(let user of filteredCustomers) { %>
-                                    <% if (user.role==='customer' ) { %>
+                                    <% } else if (filteredCustomers.length===0) { %>
                                         <tr>
-                                            <td>
-                                                <%= user.username %>
-                                            </td>
-                                            <td>
-                                                <%= user.email %>
+                                            <td colspan="5" class="text-center py-4">
+                                                <i class="fas fa-user-slash fa-2x text-muted mb-2"></i>
+                                                <p class="text-muted">No customers found matching your search</p>
                                             </td>
                                         </tr>
-                                        <% } %>
-                                            <% } %>
-                                <% } %>
+                                        <% } else { %>
+                                            <% for(let user of filteredCustomers) { %>
+                                                <% if (user.role==='customer' ) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= user.username %>
+                                                        </td>
+                                                        <td>
+                                                            <%= user.email %>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% } %>
                             </tbody>
                         </table>
                     </div>
@@ -285,7 +289,7 @@
                     const tab = formData.get('tab');
 
                     const url = `/listings/admin/dashboard?tab=${tab}&searchOwner=${searchOwner}`;
-                    
+
                     const loader = document.getElementById('owners-loader');
                     const tableContainer = document.getElementById('owners-table-container');
                     if (loader) loader.style.display = 'block';
@@ -295,7 +299,7 @@
                         const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
                         const data = await response.json();
                         updateOwnersTable(data.filteredOwners);
-                        
+
                         if (loader) loader.style.display = 'none';
                         if (tableContainer) tableContainer.style.opacity = '1';
                     } catch (error) {
@@ -323,7 +327,7 @@
                     const tab = formData.get('tab');
 
                     const url = `/listings/admin/dashboard?tab=${tab}&searchCustomer=${searchCustomer}`;
-                    
+
                     const loader = document.getElementById('customers-loader');
                     const tableContainer = document.getElementById('customers-table-container');
                     if (loader) loader.style.display = 'block';
@@ -333,7 +337,7 @@
                         const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
                         const data = await response.json();
                         updateCustomersTable(data.filteredCustomers);
-                        
+
                         if (loader) loader.style.display = 'none';
                         if (tableContainer) tableContainer.style.opacity = '1';
                     } catch (error) {
