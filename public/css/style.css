@@ -189,7 +189,8 @@ img {
 
 #map {
     height: 400px;
-    width: 80vh;
+    width: 100%;
+    max-width: 80vh;
 }
 
 /* Role selection */
@@ -387,4 +388,228 @@ img {
     .flatpickr-calendar.showTimeInput.hasTime .flatpickr-time {
         height: auto !important;
     }
+}
+
+/* ========================================= */
+/* DESKTOP RESPONSIVENESS */
+/* ========================================= */
+
+/* Standard Desktop - 1440px to 1919px */
+@media screen and (max-width: 1600px) {
+    .container {
+        max-width: 95%;
+    }
+
+    .col-8 {
+        flex: 0 0 auto;
+        width: 85%;
+    }
+
+    .col-6 {
+        flex: 0 0 auto;
+        width: 75%;
+    }
+
+    .offset-3 {
+        margin-left: 7.5%;
+    }
+
+    #map {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+/* Small Desktop - 1024px to 1439px */
+@media screen and (max-width: 1439px) {
+    .container {
+        max-width: 98%;
+        padding: 0 1rem;
+    }
+
+    .col-8,
+    .col-6 {
+        flex: 0 0 auto;
+        width: 90%;
+    }
+
+    .offset-3 {
+        margin-left: 5%;
+    }
+
+    /* Listing cards */
+    .card-img-left {
+        width: 35%;
+    }
+
+    .listing-card .card-body {
+        width: 65%;
+        padding: 0.75rem;
+    }
+
+    .listing-price {
+        font-size: 1.3rem;
+    }
+
+    /* Map */
+    #map {
+        height: 350px;
+        width: 100%;
+    }
+
+    /* Show page image */
+    .show-img {
+        height: 25vh;
+    }
+
+    /* Search filters - make them wrap better */
+    .row.g-3 {
+        gap: 0.5rem !important;
+    }
+}
+
+/* Minimum Desktop - 1024px */
+@media screen and (max-width: 1200px) {
+
+    .col-8,
+    .col-6 {
+        flex: 0 0 auto;
+        width: 95%;
+    }
+
+    .offset-3 {
+        margin-left: 2.5%;
+    }
+
+    /* Navbar */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .nav-link {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.8rem !important;
+    }
+
+    /* Listing cards - adjust image ratio */
+    .card-img-left {
+        width: 40%;
+    }
+
+    .listing-card .card-body {
+        width: 60%;
+        padding: 0.5rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .listing-price {
+        font-size: 1.2rem;
+    }
+
+    /* Forms */
+    .form-control,
+    .form-select {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* Map */
+    #map {
+        height: 300px;
+    }
+
+    /* Footer */
+    .f-info {
+        font-size: 1rem;
+        height: 7rem;
+    }
+}
+
+/* Very Small Desktop - 1024px minimum */
+@media screen and (max-width: 1024px) {
+
+    .col-8,
+    .col-6,
+    .col-md-3,
+    .col-md-2 {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .offset-3 {
+        margin-left: 0;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0 0.75rem;
+    }
+
+    /* Search filters - stack vertically */
+    .row.g-3>div {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Listing cards - keep horizontal but adjust */
+    .listing-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .card-img-left {
+        width: 45%;
+    }
+
+    .listing-card .card-body {
+        width: 55%;
+        padding: 0.5rem;
+    }
+
+    /* Typography */
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    h5 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Ensure no horizontal scroll */
+* {
+    max-width: 100%;
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Flexible containers */
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+[class*="col-"] {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
 }
